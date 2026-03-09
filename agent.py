@@ -2,10 +2,12 @@ import json
 import os
 import requests
 import sys
+from get_model import get_active_model_port
 
-BASE_URL = "http://localhost:41637/v1"
-MODEL_NAME = "<your-model-name>.gguf" # Name used when starting the server or full path
 CONTEXT_FILE = "context.json"
+
+good_port = get_active_model_port()
+base_url = f"http://localhost:{good_port}/v1"
 
 def get_initial_context():
     #return [{"role": "system", "content": "You are a professional coding assistant."}]
@@ -26,7 +28,7 @@ def save_context(context):
 
 def compile_payload(context):
     return ({
-        "model": MODEL_NAME,
+        "model": "LOCAL MODEL",
         "messages": context,
         "stream": False, # Set to true for streaming responses
         "temperature": 0.1
@@ -49,7 +51,7 @@ context = load_context()
 context.append({"role": "user", "content": user_input})
 
 try:
-    response = requests.post(f"{BASE_URL}/chat/completions", json=compile_payload(context))
+    response = requests.post(f"{base_url}/chat/completions", json=compile_payload(context))
     if response.status_code == 200:
         data = response.json()
         reply = data["choices"][0]["message"]["content"]
