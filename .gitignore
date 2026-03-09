@@ -1,0 +1,6 @@
+.venv/
+venv/
+temp/
+context.json
+use-playwright.py
+*.log
