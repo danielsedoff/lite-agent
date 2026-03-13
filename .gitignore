@@ -1,6 +1,10 @@
 .venv/
 venv/
 temp/
+__pycache__/
+.pytest_cache/
 context.json
+recur.json
 use-playwright.py
 *.log
+*.tmp

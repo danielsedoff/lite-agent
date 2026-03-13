@@ -1,20 +1,14 @@
 import asyncio
 from playwright.async_api import async_playwright
 from generate_url import generate_url
-import sys
+from args_as_text import args_as_text
 
 async def run(playwright):
 
-    user_input = " ".join(sys.argv[1:])
-
-    if not user_input.strip():
-        print("No commandline arguments. Query is expected in commandline arguments.")
-        print("arg0: clear -- clear context and quit.")
-        sys.exit()
-
+    user_input = args_as_text()
     url = generate_url(user_input)
 
-#    browser = await playwright.chromium.launch() # ...launch(headless=False)
+#   browser = await playwright.chromium.launch() # ...launch(headless=False)
     browser = await playwright.chromium.launch(headless=False)
     context = await browser.new_context()
     page = await context.new_page()

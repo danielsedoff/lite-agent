@@ -3,8 +3,10 @@ import os
 import requests
 import sys
 from get_model import get_active_model_port
+from args_as_text import args_as_text
 
 CONTEXT_FILE = "context.json"
+print("agent starting. arg1=clear: clear context and quit.")
 
 good_port = get_active_model_port()
 base_url = f"http://localhost:{good_port}/v1"
@@ -34,12 +36,7 @@ def compile_payload(context):
         "temperature": 0.1
     })
 
-user_input = " ".join(sys.argv[1:])
-
-if not user_input.strip():
-    print("No commandline arguments. Query is expected in commandline arguments.")
-    print("arg0: clear -- clear context and quit.")
-    sys.exit()
+user_input = args_as_text()
 
 if user_input.lower() == "clear":
     if os.path.exists(CONTEXT_FILE):
@@ -62,5 +59,3 @@ try:
         print(f"Error {response.status_code}: {response.text}")
 except Exception as e:
     print(f"Connection Error: {e}")
-
-
