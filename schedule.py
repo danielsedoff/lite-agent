@@ -2,28 +2,31 @@ import os
 import json
 from set_interval import set_interval
 
-RECUR_FILE = 'recur.json'
+SCHEDULE_FILE = 'schedule.json'
 
-def load_recur_file():
-    if os.path.exists(RECUR_FILE):
+def load_schedule_file():
+    if os.path.exists(SCHEDULE_FILE):
         try:
-            with open(RECUR_FILE, 'r', encoding='utf-8') as f:
+            with open(SCHEDULE_FILE, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except:
             return None
     else:
-        with open(RECUR_FILE, 'w', encoding='utf-8') as f:
+        with open(SCHEDULE_FILE, 'w', encoding='utf-8') as f:
             json.dump([{
                   "interval": 2,
                   "sh": "ls"
                 },{
                   "timer": 3,
                   "sh": "echo 12345"
+                },{
+                  "timer": 10,
+                  "sh": "echo HELLO"
                 }], f, indent=4)
 
-recur_data = load_recur_file()
-if recur_data != None and len(recur_data) > 0:
-    for item in recur_data:
+schedule_data = load_schedule_file()
+if schedule_data != None and len(schedule_data) > 0:
+    for item in schedule_data:
         if 'timer' in item:
             set_interval(int(item['timer']), item['sh'], False)
         if 'interval' in item:

@@ -4,7 +4,7 @@ temp/
 __pycache__/
 .pytest_cache/
 context.json
-recur.json
+schedule.json
 use-playwright.py
 *.log
 *.tmp
