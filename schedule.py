@@ -1,10 +1,13 @@
 import os
+import sys
 import json
 from set_interval import set_interval
+import asyncio
 
 SCHEDULE_FILE = 'schedule.json'
+SAMPLE_JSON = [{ "interval": 2, "sh": "ls" }, { "timeout": 3, "sh": "echo 1"},{ "timeout": 10, "sh": "echo 2" }]
 
-def load_schedule_file():
+def load_schedule_data():
     if os.path.exists(SCHEDULE_FILE):
         try:
             with open(SCHEDULE_FILE, 'r', encoding='utf-8') as f:
@@ -13,21 +16,20 @@ def load_schedule_file():
             return None
     else:
         with open(SCHEDULE_FILE, 'w', encoding='utf-8') as f:
-            json.dump([{
-                  "interval": 2,
-                  "sh": "ls"
-                },{
-                  "timer": 3,
-                  "sh": "echo 12345"
-                },{
-                  "timer": 10,
-                  "sh": "echo HELLO"
-                }], f, indent=4)
+            json.dump(SAMPLE_JSON, f, indent=4)
 
-schedule_data = load_schedule_file()
-if schedule_data != None and len(schedule_data) > 0:
+async def main():
+    schedule_data = load_schedule_data()
+    if schedule_data == None or len(schedule_data) < 1:
+        print('schedule.json is empty or invalid. Quitting')
+        sys.exit()
+
     for item in schedule_data:
-        if 'timer' in item:
-            set_interval(int(item['timer']), item['sh'], False)
+        if 'timeout' in item:
+            print(1111122)
+            asyncio.create_task(set_interval(int(item['timeout']), item['sh'], False))
         if 'interval' in item:
-            set_interval(int(item['interval']), item['sh'], True)
+            print(1111133)
+            asyncio.create_task(set_interval(int(item['interval']), item['sh'], True))
+
+asyncio.run(main())

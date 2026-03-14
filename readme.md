@@ -1,4 +1,4 @@
-# capi-agent
+# capy-agent
 
 This is a lightweight Python agent written for my own hardware which is an average CPU-only PC. It expects llama.cpp running locally. Before using this agent I start the llm server with the `llama-server` shell command.
 
