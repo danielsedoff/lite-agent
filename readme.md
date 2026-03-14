@@ -18,6 +18,7 @@ This script uses Playwright to open a web page and process hyperlinks in it. Thi
 
 ### `schedule.py`
 
+*attention:* currently this one is under construction and does not work well
 Reads `schedule.json` and runs shell commands according to it. If there is not `schedule.json` then it is created at first run. Every entry is either a timeout, i.e. run once after waiting a certain time, or an interval, i.e. run and repeat every `x` seconds.
 
 ## Installation
