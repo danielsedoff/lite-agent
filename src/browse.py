@@ -1,7 +1,7 @@
 import asyncio
 from playwright.async_api import async_playwright
-from generate_url import generate_url
-from args_as_text import args_as_text
+from submodules.generate_url import generate_url
+from submodules.args_as_text import args_as_text
 
 async def run(playwright):
 

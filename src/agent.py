@@ -2,8 +2,8 @@ import json
 import os
 import requests
 import sys
-from get_model import get_active_model_port
-from args_as_text import args_as_text
+from submodules.get_model import get_active_model_port
+from submodules.args_as_text import args_as_text
 
 CONTEXT_FILE = "context.json"
 print("agent starting. arg1=clear: clear context and quit.")

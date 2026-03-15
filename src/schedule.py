@@ -1,10 +1,10 @@
 import os
 import sys
 import json
-from set_interval import set_interval
+from submodules.set_interval import set_interval
 import asyncio
-from status_alive import status_alive
-from sample_json import SAMPLE_JSON
+from submodules.status_alive import status_alive
+from submodules.sample_json import SAMPLE_JSON
 
 SCHEDULE_FILE = 'schedule.json'
 
