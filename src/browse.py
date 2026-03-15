@@ -16,7 +16,7 @@ async def run(playwright):
     print(await page.title())
 
     links = await page.locator("a").evaluate_all(
-        "elements => elements.map(el => el.href)"
+        "elements => elements.map(el => ({ 'href': el.href, 'text': el.innerText }))"
     )
 
     for link in links:
