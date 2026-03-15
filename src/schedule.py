@@ -5,6 +5,7 @@ from submodules.set_interval import set_interval
 import asyncio
 from submodules.status_alive import status_alive
 from submodules.sample_json import SAMPLE_JSON
+from submodules.get_time_diff import get_time_diff
 
 SCHEDULE_FILE = 'schedule.json'
 
@@ -27,15 +28,24 @@ async def main():
 
     task1 = asyncio.create_task(set_interval(0, [], False))
     task2 = asyncio.create_task(set_interval(0, [], False))
+    task3 = asyncio.create_task(set_interval(0, [], False))
 
     for item in schedule_data:
         if 'timeout' in item:
             task1 = asyncio.create_task(set_interval(int(item['timeout']), item['sh'], False))
         if 'interval' in item:
             task2 = asyncio.create_task(set_interval(int(item['interval']), item['sh'], True))
+        if 'moment' in item:
+            given_moment = item['moment']
+            calculated_timeout = get_time_diff(given_moment)
+            if calculated_timeout == None:
+                print('Sorry, configuration contains an invalid moment: ' + given_moment)
+                sys.exit()
+            task3 = asyncio.create_task(set_interval(calculated_timeout, item['sh'], False))
 
     await task1
     await task2
+    await task3
     status_alive()
 
 asyncio.run(main())
