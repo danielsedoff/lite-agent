@@ -1,4 +1,4 @@
-# capy-agent
+# lite-agent
 
 This is a lightweight Python agent written for my own hardware which is an average CPU-only PC. It expects llama.cpp running locally. Before using this agent I start the llm server with the `llama-server` shell command.
 
@@ -17,8 +17,6 @@ If not present, this file is created by `agent.py` at its first run. This json f
 This script uses Playwright to open a web page and process hyperlinks in it. This one is for sample purposes. It does not run fast and will not allow public web service abuse. the output of this script can be redirected into a file, e.g. `$ python browse.py oxford dictionary > dictionary.log`
 
 ### `schedule.py`
-
-*attention:* currently this one is under construction and does not work well
 
 Reads `schedule.json` and runs shell commands according to it. If there is not `schedule.json` then it is created at first run. Every entry is either a timeout, i.e. run once after waiting a certain time, or an interval, i.e. run and repeat every `x` seconds.
 

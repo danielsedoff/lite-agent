@@ -3,9 +3,10 @@ import sys
 import json
 from set_interval import set_interval
 import asyncio
+from status_alive import status_alive
+from sample_json import SAMPLE_JSON
 
 SCHEDULE_FILE = 'schedule.json'
-SAMPLE_JSON = [{ "interval": 2, "sh": "ls" }, { "timeout": 3, "sh": "echo 1"},{ "timeout": 10, "sh": "echo 2" }]
 
 def load_schedule_data():
     if os.path.exists(SCHEDULE_FILE):
@@ -24,12 +25,17 @@ async def main():
         print('schedule.json is empty or invalid. Quitting')
         sys.exit()
 
+    task1 = asyncio.create_task(set_interval(0, [], False))
+    task2 = asyncio.create_task(set_interval(0, [], False))
+
     for item in schedule_data:
         if 'timeout' in item:
-            print(1111122)
-            asyncio.create_task(set_interval(int(item['timeout']), item['sh'], False))
+            task1 = asyncio.create_task(set_interval(int(item['timeout']), item['sh'], False))
         if 'interval' in item:
-            print(1111133)
-            asyncio.create_task(set_interval(int(item['interval']), item['sh'], True))
+            task2 = asyncio.create_task(set_interval(int(item['interval']), item['sh'], True))
+
+    await task1
+    await task2
+    status_alive()
 
 asyncio.run(main())
